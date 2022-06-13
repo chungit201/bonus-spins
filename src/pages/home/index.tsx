@@ -35,7 +35,8 @@ const HomePage: React.FunctionComponent = () => {
   const user = useSelector((state: any) => state.user);
   const [setting, setSetting] = useState(false);
   const [textMax, setTextMax] = useState("");
-  const [maxApi, setMaxApi] = useState(0)
+  const [maxApi, setMaxApi] = useState(0);
+  const [error,setError] = useState("")
   const navigate = useNavigate()
   useEffect(() => {
     setOdometerValue("105675");
@@ -122,6 +123,8 @@ const HomePage: React.FunctionComponent = () => {
       setMax(textMax)
       setSetting(false);
       notification.success({message: "Installed update successfully"});
+    }else {
+      setError("Please enter max number.")
     }
   }
 
@@ -150,16 +153,20 @@ const HomePage: React.FunctionComponent = () => {
       >
 
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Setting
+          <Modal.Title id=" contained-modal-title-vcenter " className={"w-100"}>
+            <div className={"w-100 text-center"}>Setting</div>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body style={{padding:"50px"}}>
           <InputGroup className="mb-3">
             <Form.Control
               onChange={(e: any) => {
+                setError("")
                 setMax(e.target.value)
                 setTextMax(e.target.value)
+                if(e.target.value.length >6){
+                  setError("Maximum number should not be more than 100000.")
+                }
               }}
               type={"number"}
               placeholder="Enter max number..."
@@ -169,21 +176,31 @@ const HomePage: React.FunctionComponent = () => {
               max={10000}
               min={1}
             />
-            <Button disabled={textMax.length > 6 && true} onClick={numberConfig} variant="outline-secondary"
-                    id="button-addon2">
-              Save
-            </Button>
+            {/*<Button disabled={textMax.length > 6 && true} onClick={numberConfig} variant="outline-secondary"*/}
+            {/*        id="button-addon2">*/}
+            {/*  Save*/}
+            {/*</Button>*/}
           </InputGroup>
-          {textMax.length > 6 && <div>
-            <p className={"text-center"} style={{color: "red"}}>Maximum number should not be more than 100000</p>
+          {error && <div>
+            <p className={"text-center"} style={{color: "red"}}>{error}</p>
           </div>}
-          <h4
-            className={"text-center"}>{textMax ? "Current largest number" : "Max ticket now"}: { textMax}</h4>
+          {textMax &&  <h4 className={"text-center"}>{!textMax ? "Current largest number" : "Max ticket now"}: { textMax}</h4>}
           <div className={"d-flex justify-content-center"}>
 
             <Button onClick={maxTicket} className={"text-center mt-2"}>Get max ticket now</Button>
           </div>
         </Modal.Body>
+
+       <div>
+         <Row className={"w-100 m-0"}>
+           <Col className={"p-0"} xl={6}>
+             <button onClick={()=>{setSetting(false)}}  className={"p-3"} style={{width:"100%",border:0,borderRight:"1px solid #ccc"}} >Cancel</button>{' '}
+           </Col>
+           <Col className={"p-0"} xl={6}>
+             <button disabled={textMax.length > 6 && true} onClick={numberConfig} className={"p-3"}  style={{width:"100%",border:0}} >Save</button>{' '}
+           </Col>
+         </Row>
+       </div>
 
       </Modal>
       <Modal
@@ -232,7 +249,7 @@ const HomePage: React.FunctionComponent = () => {
                   <h3
                     style={{
                       position: "absolute",
-                      bottom: "6px",
+                      bottom: "0px",
                       left: "78px",
                       color: "#FFFFFF",
                       fontFamily: 'Berlin Sans FB Demi ',
@@ -252,7 +269,7 @@ const HomePage: React.FunctionComponent = () => {
                   <h3
                     style={{
                       position: "absolute",
-                      bottom: "6px",
+                      bottom: "0px",
                       left: "40px",
                       color: "#FFFFFF",
 
