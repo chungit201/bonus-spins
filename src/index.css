@@ -9,3 +9,6 @@
     border-radius: 4px;
     border: none;
 }
+.modal-backdrop.show {
+    opacity: 0.8;
+}

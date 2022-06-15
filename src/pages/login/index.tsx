@@ -49,7 +49,7 @@ const LoginPage: React.FunctionComponent = () => {
         <Col xl={4} xs={8} sm={6}>
           <div className={"form-login"}>
             <Form className={"p-5"}>
-              <h4 className={"text-center"}>SLIMEROYALE LOTTERY</h4>
+              <h4 className={"text-center"}>SLIME ROYALE LOTTERY</h4>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
@@ -78,7 +78,7 @@ const LoginPage: React.FunctionComponent = () => {
               <div className={"text-center "}>
                 <Button onClick={handleSubmit} className={"btn-signup mt-3"} style={{fontWeight: "600"}}
                         variant="primary" type="submit">
-                  Signup
+                  Sign up
                 </Button>
               </div>
             </Form>
