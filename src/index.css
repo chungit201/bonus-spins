@@ -10,5 +10,8 @@
     border: none;
 }
 .modal-backdrop.show {
-    opacity: 0.8;
+    opacity: 0.7;
+}
+.modal-spin-success{
+    backdrop-filter: blur(15px);
 }

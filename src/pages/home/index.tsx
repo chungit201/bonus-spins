@@ -87,7 +87,7 @@ const HomePage: React.FunctionComponent = () => {
       setSpined(false)
     }, 3200);
     setTimeout(() => {
-      setShow(true)
+      // setShow(true)
     }, 2500);
     let value = Math.floor(Math.random() * (parseInt(max) + 1));
     console.log("vallllllll", value)

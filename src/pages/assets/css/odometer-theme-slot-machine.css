@@ -94,7 +94,12 @@
     -moz-transition: -moz-transform 2s;
     -ms-transition: -ms-transform 2s;
     -o-transition: -o-transform 2s;
-    transition: transform 2s;
+    transition: transform 4s;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
 }
 .odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner, .odometer.odometer-theme-slot-machine.odometer-animating-up.odometer-animating .odometer-ribbon-inner {
     -webkit-transform: translateY(-100%);
@@ -115,7 +120,7 @@
     -moz-transition: -moz-transform 2s;
     -ms-transition: -ms-transform 2s;
     -o-transition: -o-transform 2s;
-    transition: transform 2s;
+    transition: transform 4s;
     -webkit-transform: translateY(0);
     -moz-transform: translateY(0);
     -ms-transform: translateY(0);
