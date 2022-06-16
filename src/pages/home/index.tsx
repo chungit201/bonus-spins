@@ -87,8 +87,8 @@ const HomePage: React.FunctionComponent = () => {
       setSpined(false)
     }, 3200);
     setTimeout(() => {
-      // setShow(true)
-    }, 2500);
+      setShow(true)
+    }, 4500);
     let value = Math.floor(Math.random() * (parseInt(max) + 1));
     console.log("vallllllll", value)
     setRandom(value)
@@ -206,14 +206,14 @@ const HomePage: React.FunctionComponent = () => {
 
           <div>
             <Row className={"w-100 m-0"}>
-              <Col className={"p-0"} xl={6}>
+              <Col className={"p-0"} xl={6} xs={6}>
                 <button onClick={() => {
                   setSetting(false)
                 }} className={"p-3"} style={{width: "100%", border: 0, borderRight: "1px solid #ccc"}}>Cancel
                 </button>
                 {' '}
               </Col>
-              <Col className={"p-0"} xl={6}>
+              <Col className={"p-0"} xl={6} xs={6}>
                 <button disabled={textMax.length > 6 && true} onClick={numberConfig} className={"p-3"}
                         style={{width: "100%", border: 0}}>Save
                 </button>
