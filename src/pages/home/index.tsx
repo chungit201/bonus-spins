@@ -36,7 +36,13 @@ const HomePage: React.FunctionComponent = () => {
   const [setting, setSetting] = useState(false);
   const [textMax, setTextMax] = useState("");
   const [maxApi, setMaxApi] = useState(0);
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
+  const [audioIndex, setAudioIndex] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isPlay, setPlay] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioSpinRef = useRef<HTMLAudioElement>(null);
   const navigate = useNavigate()
   useEffect(() => {
     setOdometerValue("105675");
@@ -79,6 +85,8 @@ const HomePage: React.FunctionComponent = () => {
   console.log("maxxxx", max)
 
   const dandleSpin = () => {
+    const {current}:any = audioSpinRef;
+    current.play()
     setTotalSpin(totalSpin + 1)
     setOdometerValue("")
     setText(false)
@@ -87,7 +95,9 @@ const HomePage: React.FunctionComponent = () => {
       setSpined(false)
     }, 3200);
     setTimeout(() => {
-      setShow(true)
+      setShow(true);
+      handlePausePlayClick()
+
     }, 4500);
     let value = Math.floor(Math.random() * (parseInt(max) + 1));
     console.log("vallllllll", value)
@@ -127,6 +137,22 @@ const HomePage: React.FunctionComponent = () => {
       setError("Please enter max number.")
     }
   }
+  const {current}:any = audioRef
+  const handleLoadedData = () => {
+    setDuration(current.duration);
+    if (isPlay) current.play();
+  };
+
+  const handlePausePlayClick = () => {
+    if (isPlay) {
+
+      current.pause();
+    } else {
+     current.play();
+    }
+    setPlay(!isPlay);
+  };
+
 
   return (
     <div>
@@ -144,12 +170,13 @@ const HomePage: React.FunctionComponent = () => {
           alignItems: "center"
         }}
       >
-        <div style={{position:"absolute",top:"20px",right:"20px"}}>
+        <div style={{position: "absolute", top: "20px", right: "20px"}}>
           <div className={"d-flex"}>
             <Button onClick={() => {
               setSetting(true)
             }} className={"bg-light mx-2"} size={"lg"} style={{fontSize: "16px", color: "#0a0a0a"}}>Setting</Button>
-            <Button onClick={handleLogin} className={"bg-light mx-2"} size={"lg"} style={{fontSize: "16px", color: "#0a0a0a"}}>Logout</Button>
+            <Button onClick={handleLogin} className={"bg-light mx-2"} size={"lg"}
+                    style={{fontSize: "16px", color: "#0a0a0a"}}>Logout</Button>
           </div>
 
         </div>
@@ -161,7 +188,7 @@ const HomePage: React.FunctionComponent = () => {
           onHide={() => {
             setSetting(false)
           }}
-          className={"modal-setting"}
+          className={"modal-setting "}
         >
 
           <Modal.Header closeButton>
@@ -228,7 +255,7 @@ const HomePage: React.FunctionComponent = () => {
           size="lg"
           onHide={handleClose}
           centered
-          className={"modal-spin-success "}
+          className={"modal-spin-success animate__animated animate__tada"}
         >
           <Modal.Body>
             <div className={"text-center mt-4"}>
@@ -262,6 +289,20 @@ const HomePage: React.FunctionComponent = () => {
 
                 />
               </div>
+              <audio
+                ref={audioRef}
+                src={require("../../assets/spin-success.mp3")}
+                onLoadedData={handleLoadedData}
+                onTimeUpdate={() => setCurrentTime(current.currentTime)}
+                onEnded={() => setPlay(false)}
+              />
+              <audio
+                ref={audioSpinRef}
+                src={require("../../assets/Luckyspin-sound.mp3")}
+                onLoadedData={handleLoadedData}
+                onTimeUpdate={() => setCurrentTime(current.currentTime)}
+                onEnded={() => setPlay(false)}
+              />
               {!spined ? (
                 <div onClick={dandleSpin} className={"btn-spin animate__animated animate__bounceIn"}>
                   <div style={{position: "relative"}}>

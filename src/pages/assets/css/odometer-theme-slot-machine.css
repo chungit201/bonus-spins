@@ -129,6 +129,7 @@
 }
 .odometer-inside .odometer-digit:last-child .odometer-digit-inner {
     border:none;
+
 }
 
 .odometer-inside .odometer-digit:first-child {
