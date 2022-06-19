@@ -35,17 +35,14 @@ const HomePage: React.FunctionComponent = () => {
   const user = useSelector((state: any) => state.user);
   const [setting, setSetting] = useState(false);
   const [textMax, setTextMax] = useState("");
-  const [maxApi, setMaxApi] = useState(0);
   const [error, setError] = useState("");
-  const [audioIndex, setAudioIndex] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
   const [isPlay, setPlay] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const audioSpinRef = useRef<HTMLAudioElement>(null);
+  const [flower, setFlower] = useState(false)
   const navigate = useNavigate()
   useEffect(() => {
-    setOdometerValue("105675");
+    setOdometerValue("100000");
     checkAccount()
     checkMaxTicket()
   }, [])
@@ -85,7 +82,7 @@ const HomePage: React.FunctionComponent = () => {
   console.log("maxxxx", max)
 
   const dandleSpin = () => {
-    const {current}:any = audioSpinRef;
+    const {current}: any = audioSpinRef;
     current.play()
     setTotalSpin(totalSpin + 1)
     setOdometerValue("")
@@ -97,8 +94,12 @@ const HomePage: React.FunctionComponent = () => {
     setTimeout(() => {
       setShow(true);
       handlePausePlayClick()
+      setFlower(true)
+      setTimeout(() => {
+        setFlower(false)
+      }, 2500)
+    }, 5500);
 
-    }, 4500);
     let value = Math.floor(Math.random() * (parseInt(max) + 1));
     console.log("vallllllll", value)
     setRandom(value)
@@ -127,6 +128,9 @@ const HomePage: React.FunctionComponent = () => {
     }, 2000)
   }
 
+  const checkSuccess = () => {
+
+  }
   const numberConfig = () => {
     if (textMax) {
       localStorage.setItem("max", textMax);
@@ -137,19 +141,13 @@ const HomePage: React.FunctionComponent = () => {
       setError("Please enter max number.")
     }
   }
-  const {current}:any = audioRef
+  const {current}: any = audioRef
   const handleLoadedData = () => {
-    setDuration(current.duration);
     if (isPlay) current.play();
   };
 
   const handlePausePlayClick = () => {
-    if (isPlay) {
-
-      current.pause();
-    } else {
-     current.play();
-    }
+    current.play();
     setPlay(!isPlay);
   };
 
@@ -256,7 +254,17 @@ const HomePage: React.FunctionComponent = () => {
           onHide={handleClose}
           centered
           className={"modal-spin-success animate__animated animate__tada"}
+
         >
+          {flower &&
+            <div>
+              <img style={{position: "absolute", top: "-80px", left: "-100px"}} src={require("../../assets/gif_5.gif")}
+                   alt=""/>
+              <img style={{position: "absolute", top: "-80px", right: "-100px"}} src={require("../../assets/gif_5.gif")}
+                   alt=""/>
+            </div>
+          }
+
           <Modal.Body>
             <div className={"text-center mt-4"}>
               <h1 style={{color: "#FFFFFF", fontWeight: 700}}>Player with ticket <span
@@ -293,14 +301,12 @@ const HomePage: React.FunctionComponent = () => {
                 ref={audioRef}
                 src={require("../../assets/spin-success.mp3")}
                 onLoadedData={handleLoadedData}
-                onTimeUpdate={() => setCurrentTime(current.currentTime)}
                 onEnded={() => setPlay(false)}
               />
               <audio
                 ref={audioSpinRef}
                 src={require("../../assets/Luckyspin-sound.mp3")}
                 onLoadedData={handleLoadedData}
-                onTimeUpdate={() => setCurrentTime(current.currentTime)}
                 onEnded={() => setPlay(false)}
               />
               {!spined ? (
